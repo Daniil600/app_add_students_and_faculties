@@ -1,12 +1,21 @@
 package skypro.liberyofhogwarts.object;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Faculty {
-
-    Long id;
+    @Id
+    @GeneratedValue
+    long id;
     String name;
     String color;
+
+
+    public Faculty() {
+    }
 
     public Faculty(Long id, String name, String color) {
         this.id = id;
@@ -14,7 +23,7 @@ public class Faculty {
         this.color = color;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

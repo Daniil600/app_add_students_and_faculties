@@ -6,15 +6,12 @@ import skypro.liberyofhogwarts.object.Student;
 import java.util.Collection;
 
 public interface FacultyService {
-    Faculty getFaculty(Long id);
-    Faculty delFaculty(Long id);
+    Faculty getFaculty(long id);
+    void delFaculty(long id);
     Faculty addFaculty(Faculty faculty);
     Faculty putFaculty(Faculty faculty);
 
 
     Collection<Faculty> getAll();
 
-    void clear();
-
-    Collection<Faculty> getSort(String color);
 }

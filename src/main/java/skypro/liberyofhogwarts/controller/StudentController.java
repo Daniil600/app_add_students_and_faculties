@@ -12,20 +12,19 @@ import java.util.Collection;
 @RestController
 @RequestMapping("students")
 public class StudentController {
-    @Autowired
     StudentService studentService;
 
-    public StudentController(StudentServiceImpl studentServiceImpl) {
-        this.studentService = studentServiceImpl;
+    public StudentController(StudentServiceImpl studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> getAllStudent(){
+    public ResponseEntity<Collection<Student>> getAllStudent() {
         return ResponseEntity.ok(studentService.getAll());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+    public ResponseEntity<Student> getStudent(@PathVariable long id) {
         Student student = studentService.getStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
@@ -40,9 +39,9 @@ public class StudentController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Student> delStudent(@PathVariable Long id) {
-        Student delStudent = studentService.delStudent(id);
-        return ResponseEntity.ok(delStudent);
+    public ResponseEntity<Student> delStudent(@PathVariable long id) {
+        studentService.delStudent(id);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
@@ -52,7 +51,10 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(putStudent);
-
     }
 
+    @GetMapping("{age}")
+    public ResponseEntity<Student> getAgeStudent(@PathVariable long age) {
+        return ResponseEntity.ok().build();
+    }
 }

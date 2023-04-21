@@ -13,8 +13,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("faculty")
 public class FacultyController {
-    @Autowired
-    FacultyService facultyService;
+    private final FacultyService facultyService;
     public FacultyController(FacultyServiceImpl facultyService) {
         this.facultyService = facultyService;
     }
@@ -25,7 +24,7 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
+    public ResponseEntity<Faculty> getFaculty(@PathVariable long id) {
         Faculty faculty = facultyService.getFaculty(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -40,9 +39,9 @@ public class FacultyController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Faculty> delFaculty(@PathVariable Long id) {
-        Faculty delFaculty = facultyService.delFaculty(id);
-        return ResponseEntity.ok(delFaculty);
+    public ResponseEntity delFaculty(@PathVariable long id) {
+        facultyService.delFaculty(id);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping

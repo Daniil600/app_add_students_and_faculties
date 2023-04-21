@@ -1,54 +1,46 @@
 package skypro.liberyofhogwarts.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import skypro.liberyofhogwarts.object.Faculty;
 import skypro.liberyofhogwarts.object.Student;
+import skypro.liberyofhogwarts.repositories.FacultyRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class FacultyServiceImpl implements FacultyService{
-
-    private HashMap<Long, Faculty> faculties = new HashMap<>();
-    private Long idFaculty = 0l;
-    @Override
-    public Faculty getFaculty(Long id) {
-        return faculties.get(id);
+public class FacultyServiceImpl implements FacultyService {
+    private FacultyRepository facultyRepository;
+    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
     }
 
     @Override
-    public Faculty delFaculty(Long id) {
-        return faculties.remove(id);
+    public Faculty getFaculty(long id) {
+        return facultyRepository.findById(id).get();
+    }
+
+    @Override
+    public void delFaculty(long id) {
+        facultyRepository.deleteById(id);
     }
 
     @Override
     public Faculty addFaculty(Faculty faculty) {
-        faculty.setId(++idFaculty);
-        faculties.put(idFaculty, faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
     @Override
     public Faculty putFaculty(Faculty faculty) {
-        faculties.put(faculty.getId(), faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
     @Override
     public Collection<Faculty> getAll() {
-        return faculties.values();
-    }
-
-    @Override
-    public void clear() {
-        faculties.clear();
-        idFaculty = 0l;
-    }
-
-    @Override
-    public Collection<Faculty> getSort(String color) {
-        return faculties.values().stream().filter(faculty -> faculty.getColor().equals(color)).collect(Collectors.toList());
+        return facultyRepository.findAll();
     }
 }
