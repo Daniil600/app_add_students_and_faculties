@@ -17,6 +17,7 @@ public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
 
+
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -25,7 +26,6 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudent(long id) {
         return studentRepository.findById(id).get();
     }
-
     @Override
     public void delStudent(long id) {
         studentRepository.deleteById(id);
@@ -43,10 +43,15 @@ public class StudentServiceImpl implements StudentService {
 
 
 
-
     @Override
     public Collection<Student> getAll() {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public Student getByAge(int age) {
+        return studentRepository.findAll().stream().filter(student -> student.getAge()==age)
+                .findFirst().orElseThrow(RuntimeException::new);
     }
 
 

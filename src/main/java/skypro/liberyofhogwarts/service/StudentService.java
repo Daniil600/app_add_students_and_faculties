@@ -12,4 +12,6 @@ public interface StudentService {
     Student addStudent(Student faculty);
     Student putStudent(Student faculty);
     Collection<Student> getAll();
+
+    Student getByAge(int age);
 }

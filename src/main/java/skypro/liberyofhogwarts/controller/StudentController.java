@@ -52,9 +52,4 @@ public class StudentController {
         }
         return ResponseEntity.ok(putStudent);
     }
-
-    @GetMapping("{age}")
-    public ResponseEntity<Student> getAgeStudent(@PathVariable long age) {
-        return ResponseEntity.ok().build();
-    }
 }
