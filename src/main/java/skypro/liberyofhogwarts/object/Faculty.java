@@ -9,9 +9,9 @@ import java.util.Objects;
 public class Faculty {
     @Id
     @GeneratedValue
-    long id;
-    String name;
-    String color;
+    private long id;
+    private String name;
+    private String color;
 
 
     public Faculty() {
