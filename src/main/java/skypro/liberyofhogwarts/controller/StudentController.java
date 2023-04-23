@@ -23,7 +23,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAll());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Student> getStudent(@PathVariable long id) {
         Student student = studentService.getStudent(id);
         if (student == null) {
@@ -38,7 +38,7 @@ public class StudentController {
         return ResponseEntity.ok(createdStudent);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/age/{id}")
     public ResponseEntity<Student> delStudent(@PathVariable long id) {
         studentService.delStudent(id);
         return ResponseEntity.ok().build();
@@ -51,5 +51,23 @@ public class StudentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(putStudent);
+    }
+
+    @GetMapping("/age/{age}")
+    public ResponseEntity getStudentByAge(@PathVariable(required = false) Integer age){
+        if(age != null){
+            return ResponseEntity.ok(studentService.findStudentByAgeBetween(age));
+        }
+
+        return ResponseEntity.ok(studentService.getAll());
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity getStudentByAge(@PathVariable(required = false) String name){
+        if(name != null || !name.isBlank()){
+            return ResponseEntity.ok(studentService.findStudentByName(name));
+        }
+
+        return ResponseEntity.ok(studentService.getAll());
     }
 }

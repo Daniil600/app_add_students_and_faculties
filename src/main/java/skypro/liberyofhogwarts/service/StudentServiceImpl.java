@@ -49,9 +49,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getByAge(int age) {
-        return studentRepository.findAll().stream().filter(student -> student.getAge()==age)
-                .findFirst().orElseThrow(RuntimeException::new);
+    public Student findStudentByAgeBetween(Integer age) {
+        return studentRepository.findStudentByAge(age);
+    }
+
+    @Override
+    public Student findStudentByName(String name){
+        return studentRepository.findStudentByName(name);
     }
 
 
