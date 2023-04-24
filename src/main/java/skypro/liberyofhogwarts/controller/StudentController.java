@@ -12,7 +12,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("students")
 public class StudentController {
-    StudentService studentService;
+    private final StudentService studentService;
 
     public StudentController(StudentServiceImpl studentService) {
         this.studentService = studentService;
