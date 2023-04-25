@@ -52,7 +52,7 @@ public class StudentController {
         return ResponseEntity.ok(putStudent);
     }
 
-    @GetMapping
+    @GetMapping("/getby")
     public ResponseEntity getStudentByAge(@RequestParam(required = false) Integer age,
                                           @RequestParam(required = false) String name,
                                           @RequestParam(required = false) Long id){
