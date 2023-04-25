@@ -1,9 +1,8 @@
 package skypro.liberyofhogwarts.object;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -15,9 +14,22 @@ public class Faculty {
     private String name;
     private String color;
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(
+            mappedBy = "faculty",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Collection<Student> students;
 
+    public Faculty() {
+    }
+
+    public Faculty(long id, String name, String color, Collection<Student> students) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+        this.students = students;
+    }
 
     public void setId(long id) {
         this.id = id;
