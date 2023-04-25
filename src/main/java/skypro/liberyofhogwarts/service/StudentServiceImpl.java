@@ -26,6 +26,7 @@ public class StudentServiceImpl implements StudentService {
     public Student getStudent(long id) {
         return studentRepository.findById(id).get();
     }
+
     @Override
     public void delStudent(long id) {
         studentRepository.deleteById(id);
@@ -41,6 +42,10 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(student);
     }
 
+    @Override
+    public Student findStudentByAgeBetween(Integer min, Integer max) {
+        return studentRepository.findStudentByAgeBetween(min, max);
+    }
 
 
     @Override
@@ -49,13 +54,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findStudentByAgeBetween(Integer age) {
+    public Student findStudentByAge(Integer age) {
         return studentRepository.findStudentByAge(age);
     }
 
     @Override
-    public Student findStudentByName(String name){
+    public Student findStudentByName(String name) {
         return studentRepository.findStudentByName(name);
+    }
+
+    @Override
+    public Student findStudentById(Long id) {
+        return studentRepository.findStudentById(id);
     }
 
 

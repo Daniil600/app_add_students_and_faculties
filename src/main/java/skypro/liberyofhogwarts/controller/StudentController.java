@@ -23,19 +23,18 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAll());
     }
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable long id) {
-        Student student = studentService.getStudent(id);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(student);
-    }
+//    @GetMapping("/id/{id}")
+//    public ResponseEntity<Student> getStudent(@PathVariable long id) {
+//        Student student = studentService.getStudent(id);
+//        if (student == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(student);
+//    }
 
     @PostMapping
     public ResponseEntity<Student> postStudent(@RequestBody Student student) {
-        Student createdStudent = studentService.addStudent(student);
-        return ResponseEntity.ok(createdStudent);
+        return ResponseEntity.ok(studentService.addStudent(student));
     }
 
     @DeleteMapping("/del/{id}")
@@ -53,17 +52,33 @@ public class StudentController {
         return ResponseEntity.ok(putStudent);
     }
 
-    @GetMapping("/age/{age}")
-    public ResponseEntity getStudentByAge(@PathVariable(required = false) Integer age){
+    @GetMapping
+    public ResponseEntity getStudentByAge(@RequestParam(required = false) Integer age,
+                                          @RequestParam(required = false) String name,
+                                          @RequestParam(required = false) Long id){
         if(age != null){
-            return ResponseEntity.ok(studentService.findStudentByAgeBetween(age));
+            return ResponseEntity.ok(studentService.findStudentByAge(age));
+        }
+        if(age != null){
+            return ResponseEntity.ok(studentService.findStudentByName(name));
+        }
+        if(age != null){
+            return ResponseEntity.ok(studentService.findStudentById(id));
         }
 
         return ResponseEntity.ok(studentService.getAll());
     }
 
+    @GetMapping("/{min}/{max}")
+    public ResponseEntity getStudentByAge(@PathVariable Integer min, Integer max){
+        if(min != null && max != null){
+            return ResponseEntity.ok(studentService.findStudentByAgeBetween(min,max));
+        }
+        return ResponseEntity.ok(studentService.getAll());
+    }
+
     @GetMapping("/name/{name}")
-    public ResponseEntity getStudentByAge(@PathVariable(required = false) String name){
+    public ResponseEntity getStudentByAge(@PathVariable String name){
         if(name != null || !name.isBlank()){
             return ResponseEntity.ok(studentService.findStudentByName(name));
         }

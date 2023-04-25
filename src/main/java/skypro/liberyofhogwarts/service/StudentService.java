@@ -12,7 +12,8 @@ public interface StudentService {
     Student addStudent(Student faculty);
     Student putStudent(Student faculty);
     Collection<Student> getAll();
-
-    Student findStudentByAgeBetween(Integer age);
+    Student findStudentByAgeBetween(Integer min, Integer max);
+    Student findStudentByAge(Integer age);
     Student findStudentByName(String name);
+    Student findStudentById(Long id);
 }

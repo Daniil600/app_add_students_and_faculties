@@ -1,5 +1,9 @@
 package skypro.liberyofhogwarts.object;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -9,18 +13,13 @@ import java.util.Objects;
 @Entity
 public class Faculty {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String color;
-
-    @OneToMany(
-            mappedBy = "faculty",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
     private Collection<Student> students;
-
     public Faculty() {
     }
 
