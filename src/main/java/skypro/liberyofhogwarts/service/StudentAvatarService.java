@@ -3,9 +3,9 @@ package skypro.liberyofhogwarts.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import skypro.liberyofhogwarts.object.Avatar;
 import skypro.liberyofhogwarts.object.Student;
-import skypro.liberyofhogwarts.object.StudentCover;
-import skypro.liberyofhogwarts.repositories.StudentCoverRepository;
+import skypro.liberyofhogwarts.repositories.StudentAvatarRepository;
 import skypro.liberyofhogwarts.repositories.StudentRepository;
 
 import javax.imageio.ImageIO;
@@ -18,27 +18,25 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
 
-import static io.swagger.v3.core.util.AnnotationsUtils.getExtensions;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
-public class StudentCoverService {
+public class StudentAvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
     private final StudentServiceImpl studentService;
-    private final StudentCoverRepository studentCoverRepository;
+    private final StudentAvatarRepository studentCoverRepository;
     private final StudentRepository studentRepository;
 
-
-    public StudentCoverService(StudentServiceImpl studentService, StudentCoverRepository studentCoverRepository, StudentRepository studentRepository) {
+    public StudentAvatarService(StudentServiceImpl studentService, StudentAvatarRepository studentCoverRepository, StudentRepository studentRepository) {
         this.studentService = studentService;
         this.studentCoverRepository = studentCoverRepository;
         this.studentRepository = studentRepository;
     }
 
-    public Optional<StudentCover> findStudentCover(long id) {
+    public Optional<Avatar> findStudentCover(long id) {
         return studentCoverRepository.findStudentCoverById(id);
     }
 
@@ -60,11 +58,11 @@ public class StudentCoverService {
         ) {
             bis.transferTo(bos);
         }
-        Optional<StudentCover> studentCover = findStudentCover(studentId);
-        StudentCover avatar;
+        Optional<Avatar> studentCover = findStudentCover(studentId);
+        Avatar avatar;
 
         if (studentCover.isEmpty()) {
-            avatar = new StudentCover();
+            avatar = new Avatar();
         } else {
             avatar = studentCover.get();
         }

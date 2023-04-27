@@ -3,10 +3,9 @@ package skypro.liberyofhogwarts.object;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Optional;
 
 @Entity
-public class StudentCover {
+public class Avatar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -21,10 +20,10 @@ public class StudentCover {
     @OneToOne
     private Student student;
 
-    public StudentCover() {
+    public Avatar() {
     }
 
-    public StudentCover(long id, String filePath, long fileSize, String mediaType, byte[] data, byte[] preview, Student student) {
+    public Avatar(long id, String filePath, long fileSize, String mediaType, byte[] data, byte[] preview, Student student) {
         this.id = id;
         this.filePath = filePath;
         this.fileSize = fileSize;
@@ -94,7 +93,7 @@ public class StudentCover {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentCover that = (StudentCover) o;
+        Avatar that = (Avatar) o;
         return id == that.id && fileSize == that.fileSize && Objects.equals(filePath, that.filePath) && Objects.equals(mediaType, that.mediaType) && Arrays.equals(data, that.data) && Objects.equals(student, that.student);
     }
 
