@@ -1,10 +1,9 @@
 package skypro.liberyofhogwarts.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import skypro.liberyofhogwarts.object.Student;
-import skypro.liberyofhogwarts.service.StudentService;
+import skypro.liberyofhogwarts.service.StudentAvatarService;
 import skypro.liberyofhogwarts.service.StudentServiceImpl;
 
 import java.util.Collection;
@@ -12,10 +11,12 @@ import java.util.Collection;
 @RestController
 @RequestMapping("students")
 public class StudentController {
-    StudentService studentService;
+    private final StudentServiceImpl studentService;
+    private final StudentAvatarService studentAvatarService;
 
-    public StudentController(StudentServiceImpl studentService) {
+    public StudentController(StudentServiceImpl studentService, StudentAvatarService studentAvatarService) {
         this.studentService = studentService;
+        this.studentAvatarService = studentAvatarService;
     }
 
     @GetMapping
@@ -23,22 +24,12 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAll());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable long id) {
-        Student student = studentService.getStudent(id);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(student);
-    }
-
     @PostMapping
     public ResponseEntity<Student> postStudent(@RequestBody Student student) {
-        Student createdStudent = studentService.addStudent(student);
-        return ResponseEntity.ok(createdStudent);
+        return ResponseEntity.ok(studentService.addStudent(student));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/del/{id}")
     public ResponseEntity<Student> delStudent(@PathVariable long id) {
         studentService.delStudent(id);
         return ResponseEntity.ok().build();
@@ -53,8 +44,40 @@ public class StudentController {
         return ResponseEntity.ok(putStudent);
     }
 
-    @GetMapping("{age}")
-    public ResponseEntity<Student> getAgeStudent(@PathVariable long age) {
-        return ResponseEntity.ok().build();
+    @GetMapping("/getby")
+    public ResponseEntity getStudentByAge(@RequestParam(required = false) Integer age,
+                                          @RequestParam(required = false) String name,
+                                          @RequestParam(required = false) Long id) {
+        if (age != null) {
+            return ResponseEntity.ok(studentService.findStudentByAge(age));
+        }
+        if (age != null) {
+            return ResponseEntity.ok(studentService.findStudentByName(name));
+        }
+        if (age != null) {
+            return ResponseEntity.ok(studentService.findStudentById(id));
+        }
+
+        return ResponseEntity.ok(studentService.getAll());
     }
+
+    @GetMapping("/{min}/{max}")
+    public ResponseEntity getStudentByAge(@PathVariable Integer min, Integer max) {
+        if (min != null && max != null) {
+            return ResponseEntity.ok(studentService.findStudentByAgeBetween(min, max));
+        }
+        return ResponseEntity.ok(studentService.getAll());
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity getStudentByAge(@PathVariable String name) {
+        if (name != null || !name.isBlank()) {
+            return ResponseEntity.ok(studentService.findStudentByName(name));
+        }
+
+        return ResponseEntity.ok(studentService.getAll());
+    }
+
+
 }
+

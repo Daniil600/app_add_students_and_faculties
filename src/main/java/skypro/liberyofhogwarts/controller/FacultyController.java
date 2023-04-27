@@ -1,11 +1,8 @@
 package skypro.liberyofhogwarts.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import skypro.liberyofhogwarts.object.Faculty;
-import skypro.liberyofhogwarts.object.Faculty;
-import skypro.liberyofhogwarts.service.FacultyService;
 import skypro.liberyofhogwarts.service.FacultyServiceImpl;
 
 import java.util.Collection;
@@ -13,7 +10,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("faculty")
 public class FacultyController {
-    private final FacultyService facultyService;
+    private final FacultyServiceImpl facultyService;
     public FacultyController(FacultyServiceImpl facultyService) {
         this.facultyService = facultyService;
     }
