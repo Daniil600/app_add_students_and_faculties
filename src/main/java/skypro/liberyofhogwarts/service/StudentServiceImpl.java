@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class StudentServiceImpl implements StudentService {
+public class StudentServiceImpl{
 
 
     private StudentRepository studentRepository;
@@ -22,48 +22,39 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
-    @Override
     public Student getStudent(long id) {
         return studentRepository.findById(id).get();
     }
 
-    @Override
     public void delStudent(long id) {
         studentRepository.deleteById(id);
     }
 
-    @Override
     public Student addStudent(Student student) {
         return studentRepository.save(student);
     }
 
-    @Override
     public Student putStudent(Student student) {
         return studentRepository.save(student);
     }
 
-    @Override
     public Student findStudentByAgeBetween(Integer min, Integer max) {
         return studentRepository.findStudentByAgeBetween(min, max);
     }
 
 
-    @Override
     public Collection<Student> getAll() {
         return studentRepository.findAll();
     }
 
-    @Override
     public Student findStudentByAge(Integer age) {
         return studentRepository.findStudentByAge(age);
     }
 
-    @Override
     public Student findStudentByName(String name) {
         return studentRepository.findStudentByName(name);
     }
 
-    @Override
     public Student findStudentById(Long id) {
         return studentRepository.findStudentById(id);
     }
