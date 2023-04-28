@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import skypro.liberyofhogwarts.controller.StudentController;
 import skypro.liberyofhogwarts.object.Student;
+import skypro.liberyofhogwarts.repositories.FacultyRepository;
 import skypro.liberyofhogwarts.repositories.StudentAvatarRepository;
 import skypro.liberyofhogwarts.repositories.StudentRepository;
 import skypro.liberyofhogwarts.service.FacultyServiceImpl;
@@ -33,16 +34,18 @@ class ApplicationTests {
 
     @MockBean
     private StudentRepository studentRepository;
+    @MockBean
+    private FacultyRepository facultyRepository;
 
     @MockBean
     private StudentAvatarRepository studentAvatarRepository;
-    @MockBean
+    @SpyBean
     private StudentServiceImpl studentService;
 
-    @MockBean
+    @SpyBean
     private StudentAvatarService studentAvatarService;
 
-    @MockBean
+    @SpyBean
     private FacultyServiceImpl facultyService;
 
     @InjectMocks
@@ -59,6 +62,7 @@ class ApplicationTests {
         JSONObject studentObject = new JSONObject();
 
         studentObject.put("name", NAME);
+        studentObject.put("id", ID);
         studentObject.put("age", AGE);
 
         Student student = new Student();
@@ -76,16 +80,17 @@ class ApplicationTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.id").value(ID))
+                .andExpect(jsonPath("$.id").value(ID))
                 .andExpect(jsonPath("$.name").value(NAME))
                 .andExpect(jsonPath("$.age").value(AGE));
-//        mockMvc.perform(MockMvcRequestBuilders
-//                        .get("students/getby/1")
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(ID))
-//                .andExpect(jsonPath("$.name").value(NAME))
-//                .andExpect(jsonPath("$.age").value(AGE));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/students/getby/id?id=" + ID)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.age").value(AGE));
     }
 
 }

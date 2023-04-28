@@ -45,21 +45,27 @@ public class StudentController {
     }
 
     @GetMapping("/getby")
-    public ResponseEntity getStudentByAge(@RequestParam(required = false) Integer age,
-                                          @RequestParam(required = false) String name,
-                                          @RequestParam(required = false) Long id) {
+    public ResponseEntity getStudentBy(@RequestParam(required = false) Integer age,
+                                          @RequestParam(required = false) String name) {
         if (age != null) {
             return ResponseEntity.ok(studentService.findStudentByAge(age));
         }
-        if (age != null) {
+        if (name != null) {
             return ResponseEntity.ok(studentService.findStudentByName(name));
         }
-        if (age != null) {
-            return ResponseEntity.ok(studentService.findStudentById(id));
-        }
+
 
         return ResponseEntity.ok(studentService.getAll());
     }
+    @GetMapping("getby/id")
+    public ResponseEntity getStudentById(@RequestParam(required = false) Long id){
+        if (id != null) {
+            return ResponseEntity.ok(studentService.findStudentById(id));
+        }
+        return ResponseEntity.ok(studentService.getAll());
+    }
+
+
 
     @GetMapping("/{min}/{max}")
     public ResponseEntity getStudentByAge(@PathVariable Integer min, Integer max) {
