@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import skypro.liberyofhogwarts.object.Student;
 import skypro.liberyofhogwarts.repositories.StudentRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,8 +52,9 @@ public class StudentServiceImpl{
         return studentRepository.findStudentByName(name);
     }
 
-    public Student findStudentById(Long id) {
-        return studentRepository.findStudentById(id);
+    public Optional<Student> findStudentById(Long id) {
+
+        return studentRepository.findById(id);
     }
 
 

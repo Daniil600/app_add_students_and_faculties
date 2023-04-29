@@ -5,10 +5,11 @@ import org.springframework.stereotype.Repository;
 import skypro.liberyofhogwarts.object.Student;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Student findStudentByAge(Integer age);
     Student findStudentByName(String name);
-    Student findStudentById(Long id);
     Student findStudentByAgeBetween(Integer min, Integer max);
 }

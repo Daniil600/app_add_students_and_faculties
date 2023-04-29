@@ -68,7 +68,7 @@ public class StudentController {
 
 
     @GetMapping("/{min}/{max}")
-    public ResponseEntity getStudentByAge(@PathVariable Integer min, Integer max) {
+    public ResponseEntity getStudentByAge(@PathVariable Integer min, @PathVariable Integer max) {
         if (min != null && max != null) {
             return ResponseEntity.ok(studentService.findStudentByAgeBetween(min, max));
         }
