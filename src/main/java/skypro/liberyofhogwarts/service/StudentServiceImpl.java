@@ -57,5 +57,17 @@ public class StudentServiceImpl{
         return studentRepository.findById(id);
     }
 
+    public Long getCountStudent(){
+        return studentRepository.count();
+    }
+
+    public double getAvgAge(){
+        return studentRepository.avgAge();
+    }
+
+    public List<Student> getLastFiveStudents(){
+        return studentRepository.lastFiveStudents();
+    }
+
 
 }

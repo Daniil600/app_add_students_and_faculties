@@ -17,19 +17,26 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("avatar")
 public class AvatarController {
 
-    private final StudentServiceImpl studentService;
     private final StudentAvatarService studentAvatarService;
 
-    public AvatarController(StudentServiceImpl studentService, StudentAvatarService studentAvatarService) {
-        this.studentService = studentService;
+    public AvatarController(StudentAvatarService studentAvatarService) {
         this.studentAvatarService = studentAvatarService;
     }
+
+    @GetMapping("/all-avatar")
+    public ResponseEntity<List<Avatar>> getAllAvatar(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize){
+        List<Avatar> avatars = studentAvatarService.getAllAvatars(pageNumber, pageSize);
+        return ResponseEntity.ok(avatars);
+    }
+
+
 
 
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

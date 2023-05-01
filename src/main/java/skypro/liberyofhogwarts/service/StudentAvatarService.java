@@ -1,6 +1,7 @@
 package skypro.liberyofhogwarts.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import skypro.liberyofhogwarts.object.Avatar;
@@ -15,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -27,17 +29,17 @@ public class StudentAvatarService {
     private String avatarsDir;
 
     private final StudentServiceImpl studentService;
-    private final StudentAvatarRepository studentCoverRepository;
+    private final StudentAvatarRepository studentAvatarRepository;
     private final StudentRepository studentRepository;
 
     public StudentAvatarService(StudentServiceImpl studentService, StudentAvatarRepository studentCoverRepository, StudentRepository studentRepository) {
         this.studentService = studentService;
-        this.studentCoverRepository = studentCoverRepository;
+        this.studentAvatarRepository = studentCoverRepository;
         this.studentRepository = studentRepository;
     }
 
     public Optional<Avatar> findStudentCover(long id) {
-        return studentCoverRepository.findStudentCoverById(id);
+        return studentAvatarRepository.findById(id);
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
@@ -74,7 +76,7 @@ public class StudentAvatarService {
         avatar.setData(avatarFile.getBytes());
         avatar.setPreview(generateImagePriview(filePath));
 
-        studentCoverRepository.save(avatar);
+        studentAvatarRepository.save(avatar);
 
     }
 
@@ -101,4 +103,9 @@ public class StudentAvatarService {
     }
 
 
+    public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1 , pageSize);
+        return studentAvatarRepository.findAll(pageRequest).getContent();
+    }
 }
