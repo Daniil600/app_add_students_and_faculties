@@ -47,9 +47,10 @@ class StudentConrollerTests {
     private FacultyServiceImpl facultyService;
     @InjectMocks
     private StudentController studentController;
+
     @Test
     public void saveStudentTest() throws Exception {
-
+//Подготовка данных
         final String NAME = "Иван";
         final long ID = 1l;
         final int AGE = 21;
@@ -66,11 +67,11 @@ class StudentConrollerTests {
         student.setName(NAME);
         student.setAge(AGE);
 
-
+//Подготовка ожидаемого рез-та
         when(studentRepository.save(any(Student.class))).thenReturn(student);
 
 
-
+//Начало теста
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/students")
                         .content(studentObject.toString())
@@ -86,7 +87,7 @@ class StudentConrollerTests {
 
 
     @Test
-    public void StudentGetTests() throws Exception{
+    public void StudentGetTests() throws Exception {
 
         //Подготовка входных значений
 
@@ -125,12 +126,11 @@ class StudentConrollerTests {
         when(studentRepository.findStudentByAgeBetween(any(Integer.class), any(Integer.class))).thenReturn(student);
 
 
-
         //Тесты
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/students")
-                .accept(MediaType.APPLICATION_JSON))
+                        .get("/students")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
 
@@ -144,24 +144,24 @@ class StudentConrollerTests {
 
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/students/getby?name=" + NAME)
-                .accept(MediaType.APPLICATION_JSON))
+                        .get("/students/getby?name=" + NAME)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ID))
                 .andExpect(jsonPath("$.name").value(NAME))
                 .andExpect(jsonPath("$.age").value(AGE));
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/students/getby?age=" + AGE)
-                .accept(MediaType.APPLICATION_JSON))
+                        .get("/students/getby?age=" + AGE)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ID))
                 .andExpect(jsonPath("$.name").value(NAME))
                 .andExpect(jsonPath("$.age").value(AGE));
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/students/"+ 20 +"/"+ 30)
-                .accept(MediaType.APPLICATION_JSON))
+                        .get("/students/" + 20 + "/" + 30)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ID))
                 .andExpect(jsonPath("$.name").value(NAME))

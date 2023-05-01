@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("avatar")
+@RequestMapping("/avatar")
 public class AvatarController {
 
     private final StudentAvatarService studentAvatarService;

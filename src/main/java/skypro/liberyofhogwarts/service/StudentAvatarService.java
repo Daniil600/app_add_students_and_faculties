@@ -28,12 +28,10 @@ public class StudentAvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
 
-    private final StudentServiceImpl studentService;
     private final StudentAvatarRepository studentAvatarRepository;
     private final StudentRepository studentRepository;
 
-    public StudentAvatarService(StudentServiceImpl studentService, StudentAvatarRepository studentCoverRepository, StudentRepository studentRepository) {
-        this.studentService = studentService;
+    public StudentAvatarService(StudentAvatarRepository studentCoverRepository, StudentRepository studentRepository) {
         this.studentAvatarRepository = studentCoverRepository;
         this.studentRepository = studentRepository;
     }
