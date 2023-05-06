@@ -1,5 +1,7 @@
 package skypro.liberyofhogwarts.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 public class StudentAvatarService {
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
+    Logger logger = LoggerFactory.getLogger(StudentAvatarService.class);
 
     private final StudentAvatarRepository studentAvatarRepository;
     private final StudentRepository studentRepository;
@@ -37,10 +40,12 @@ public class StudentAvatarService {
     }
 
     public Optional<Avatar> findStudentCover(long id) {
+        logger.info("findStudentCover is app");
         return studentAvatarRepository.findById(id);
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("uploadAvatar is app");
         Optional<Student> optionalStudent = studentRepository.findById(studentId);
         if (optionalStudent.isEmpty()) {
             throw new RuntimeException();
@@ -79,6 +84,7 @@ public class StudentAvatarService {
     }
 
     private byte[] generateImagePriview(Path filePath) throws IOException {
+        logger.info("generateImagePriview is app");
         try (InputStream is = Files.newInputStream(filePath);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -97,11 +103,13 @@ public class StudentAvatarService {
     }
 
     private String getExtensions(String fileName) {
+        logger.info("getExtensions is app");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
 
     public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        logger.info("getAllAvatars is app");
 
         PageRequest pageRequest = PageRequest.of(pageNumber - 1 , pageSize);
         return studentAvatarRepository.findAll(pageRequest).getContent();
