@@ -82,6 +82,21 @@ public class StudentServiceImpl{
         logger.info("getLastFiveStudents is app");
         return studentRepository.lastFiveStudents();
     }
+    public List<String> getStudentByLetter(){
+        logger.info("getStudentByLetter is app");
+        return studentRepository.findAll().stream()
+                .filter(s -> s.getName().startsWith("А"))
+                .map(n -> n.getName().toUpperCase())
+                .sorted()
+                .collect(Collectors.toList());
+    }
 
+    public Double getAvgAgeOfStudent(){
+        logger.info("getAvgAgeOfStudent is app");
+        return studentRepository.findAll().stream()
+                .mapToInt(s -> s.getAge())
+                .average()
+                .orElse(0);
+    }
 
 }

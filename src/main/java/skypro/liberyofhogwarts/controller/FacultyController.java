@@ -53,6 +53,16 @@ public class FacultyController {
 
     }
 
+    @GetMapping("/most-length")
+    public ResponseEntity getMostLenghthFaculty() {
+        return ResponseEntity.ok(facultyService.getMostLenghthFaculty());
+
+    }
 
 
+    @GetMapping("/checkparallel")
+    public ResponseEntity checkParaller() {
+        return ResponseEntity.ok(facultyService.checkParaller());
+
+    }
 }

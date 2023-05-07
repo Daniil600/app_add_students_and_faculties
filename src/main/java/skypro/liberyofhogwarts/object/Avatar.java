@@ -37,6 +37,7 @@ public class Avatar {
         this.student = student;
     }
 
+
     public long getId() {
         return id;
     }

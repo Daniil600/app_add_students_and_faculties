@@ -99,5 +99,15 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getLastFiveStudents());
     }
 
+    @GetMapping("/get-letter")
+    public ResponseEntity getStudentByLetter(){
+        return ResponseEntity.ok(studentService.getStudentByLetter());
+    }
+
+    //getAvgAgeOfStudent
+    @GetMapping("/get-avg-age")
+    public ResponseEntity getAvgAgeOfStudent(){
+        return ResponseEntity.ok(studentService.getAvgAgeOfStudent());
+    }
 }
 
