@@ -11,6 +11,7 @@ import skypro.liberyofhogwarts.repositories.FacultyRepository;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
@@ -58,6 +59,8 @@ public class FacultyServiceImpl {
 
     public String checkParaller() {
         logger.info("checkParaller is app");
+
+
         long start = System.currentTimeMillis();
         int s = Stream
                 .iterate(1, a -> a + 1)

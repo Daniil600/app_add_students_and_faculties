@@ -109,5 +109,19 @@ public class StudentController {
     public ResponseEntity getAvgAgeOfStudent(){
         return ResponseEntity.ok(studentService.getAvgAgeOfStudent());
     }
+
+    //getAllWithParallel
+    @GetMapping("/student-parallel")
+    public ResponseEntity getAllWithParallel(){
+        studentService.getAllWithParallel();
+        return ResponseEntity.ok().build();
+    }
+
+    //getAllWithParallelSynchronized
+    @GetMapping("/student-synchronized")
+    public ResponseEntity getAllWithParallelSynchronized(){
+        studentService.getAllWithParallelSynchronized();
+        return ResponseEntity.ok().build();
+    }
 }
 
