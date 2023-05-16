@@ -2,10 +2,12 @@ package skypro.liberyofhogwarts.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import skypro.liberyofhogwarts.object.Avatar;
 import skypro.liberyofhogwarts.object.Faculty;
 import skypro.liberyofhogwarts.service.FacultyServiceImpl;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("faculty")
@@ -51,6 +53,16 @@ public class FacultyController {
 
     }
 
+    @GetMapping("/most-length")
+    public ResponseEntity getMostLenghthFaculty() {
+        return ResponseEntity.ok(facultyService.getMostLenghthFaculty());
+
+    }
 
 
+    @GetMapping("/checkparallel")
+    public ResponseEntity checkParaller() {
+        return ResponseEntity.ok(facultyService.checkParaller());
+
+    }
 }

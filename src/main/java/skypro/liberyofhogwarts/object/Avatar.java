@@ -1,5 +1,7 @@
 package skypro.liberyofhogwarts.object;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -7,14 +9,16 @@ import java.util.Objects;
 @Entity
 public class Avatar {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     private String filePath;
     private long fileSize;
     private String mediaType;
     @Lob
+    @JsonIgnore
     private byte[] data;
+    @JsonIgnore
     private byte[] preview;
 
     @OneToOne
@@ -32,6 +36,7 @@ public class Avatar {
         this.preview = preview;
         this.student = student;
     }
+
 
     public long getId() {
         return id;

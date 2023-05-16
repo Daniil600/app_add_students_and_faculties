@@ -45,24 +45,30 @@ public class StudentController {
     }
 
     @GetMapping("/getby")
-    public ResponseEntity getStudentByAge(@RequestParam(required = false) Integer age,
-                                          @RequestParam(required = false) String name,
-                                          @RequestParam(required = false) Long id) {
+    public ResponseEntity getStudentBy(@RequestParam(required = false) Integer age,
+                                          @RequestParam(required = false) String name) {
         if (age != null) {
             return ResponseEntity.ok(studentService.findStudentByAge(age));
         }
-        if (age != null) {
+        if (name != null) {
             return ResponseEntity.ok(studentService.findStudentByName(name));
         }
-        if (age != null) {
-            return ResponseEntity.ok(studentService.findStudentById(id));
-        }
+
 
         return ResponseEntity.ok(studentService.getAll());
     }
+    @GetMapping("getby/id")
+    public ResponseEntity getStudentById(@RequestParam(required = false) Long id){
+        if (id != null) {
+            return ResponseEntity.ok(studentService.findStudentById(id));
+        }
+        return ResponseEntity.ok(studentService.getAll());
+    }
+
+
 
     @GetMapping("/{min}/{max}")
-    public ResponseEntity getStudentByAge(@PathVariable Integer min, Integer max) {
+    public ResponseEntity getStudentByAge(@PathVariable Integer min, @PathVariable Integer max) {
         if (min != null && max != null) {
             return ResponseEntity.ok(studentService.findStudentByAgeBetween(min, max));
         }
@@ -78,6 +84,44 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getAll());
     }
 
+    @GetMapping("/count")
+    public ResponseEntity getCountStudent() {
 
+        return ResponseEntity.ok(studentService.getCountStudent());
+    }
+
+    @GetMapping("/avg-age")
+    public ResponseEntity getAvgAge(){
+        return ResponseEntity.ok(studentService.getAvgAge());
+    }
+    @GetMapping("/last-five")
+    public ResponseEntity getLastFiveStudent(){
+        return ResponseEntity.ok(studentService.getLastFiveStudents());
+    }
+
+    @GetMapping("/get-letter")
+    public ResponseEntity getStudentByLetter(){
+        return ResponseEntity.ok(studentService.getStudentByLetter());
+    }
+
+    //getAvgAgeOfStudent
+    @GetMapping("/get-avg-age")
+    public ResponseEntity getAvgAgeOfStudent(){
+        return ResponseEntity.ok(studentService.getAvgAgeOfStudent());
+    }
+
+    //getAllWithParallel
+    @GetMapping("/student-parallel")
+    public ResponseEntity getAllWithParallel(){
+        studentService.getAllWithParallel();
+        return ResponseEntity.ok().build();
+    }
+
+    //getAllWithParallelSynchronized
+    @GetMapping("/student-synchronized")
+    public ResponseEntity getAllWithParallelSynchronized(){
+        studentService.getAllWithParallelSynchronized();
+        return ResponseEntity.ok().build();
+    }
 }
 
